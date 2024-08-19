@@ -1,0 +1,220 @@
+/*Die Grundidee für dieses Programm fand ich zufällig, als ich nach Java Tutorials gesucht
+ * hatte, aber dann in einem JavaScript Tutorial gelandet bin. Um Programmieren zu üben
+ * erschien mir der Aufbau zunächst recht spannend, weshalb ich meine eigene Version davon
+ * in Java umsetzen wollte.
+ * 
+ * Den Spielverlauf an sich habe ich am Ende dann abgekürzt, da es mir nicht unbedingt
+ * darum ging, eine lange Story zu erstellen, sondern den Programmhintergrund verstehen
+ * zu lernen. Die Story ließe sich natürlich unendlich erweitern (bzw. bis die Ressourcen
+ * aufgebraucht sind) oder noch etwas komplexer gestalten. Der Code bietet auch sicher
+ * noch Potential an der ein oder anderen Stelle gekürzt oder zusammengefasst zu werden.
+ * Vielleicht kehre ich bei Gelegenheit nochmal zu dem Projekt zurück, um damit zu
+ * experimentieren oder neu Gelerntes zu implementieren.  
+*/
+
+package game;
+//Import von JDialog und JLabel für das Textfenster
+import javax.swing.*;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class Game {
+	//das Guthaben "Geld" des Spielers
+	public static int money = 500;
+  //Füllstand des Autotanks
+	public static int fuel = 100;
+	
+	public static void main(String[] args) {
+				
+		//Legt die Variable gestartetText zum Anzeigen fest
+		String gestartetText = ("Das Programm wurde gestartet");
+		//"intro" gibt den Introtext wieder
+		String intro = ("<html><center>Du fährst auf der Route 66, der berühmtesten Straße Amerikas.<br>"
+				+ "Deine Reise startet in Santa Fe, New Mexico und du willst den ganzen Weg <br>"
+				+ "Richtung Südwesten zum Pazifischen Ozean in Santa Monica, Kalifornien fahren.</center></html>");
+		//Hinweis auf den Start der Anwendung in der Konsole
+		System.out.println (gestartetText);
+		
+		 // Erstellen des Hauptfensters (JFrame)
+       JFrame frame = new JFrame();
+       	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       	frame.setSize(600, 220);
+       	frame.setLayout(null);
+		//Anlegen der Buttons
+		JButton startbutton = new JButton ("Let's go!");
+		JButton weiter = new JButton ();
+		JButton sandwichFishButton = new JButton ("Fischsandwich");
+		JButton sandwichCheeseButton = new JButton ("Käse-Salamisandwich");
+		JButton gemuetlichButton = new JButton (" Gemütlich ");
+		JButton vollgasButton = new JButton (" Vollgas! ");
+		JButton reiseNeustartenButton = new JButton (" Neustarten ");
+		JButton reiseBeendenButton = new JButton (" Beenden ");
+			frame.setLayout(new FlowLayout()); //legt das Layout des JPanels fest
+			frame.setTitle("Reise Abenteuer");
+			frame.add(new JLabel(intro)); //fügt den Introtext dem JPanel hinzu
+			frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>")); //fügt die Anzeige der Ressourcen dem JPanel hinzu
+			frame.add(startbutton); //fügt den Startbutton dem JPanel hinzu
+			frame.setVisible(true);
+			
+	        startbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	frame.getContentPane().removeAll();
+	            	frame.revalidate();
+	            	frame.repaint();
+	            	//Nächster Textabschnitt des Abenteuers
+	                frame.add(new JLabel("<html><center>Nachdem du eine Weile gefahren bist, knurrt dir der Magen.<br>"
+	                		+ "Du hältst an der nächsten Tankstelle, um dir etwas zu Essen zu besorgen.<br>"
+	                		+ "Dir fällt sofort die Theke mit den frischen Sandwiches und gesalzenen<br>"
+	                		+ "Preisen in's Auge. Sie haben Fischsandwiches für 20$ und Käse-Salamisandwiches<br>"
+	                		+ "für 30$. Für was entscheidest du dich?</html>"));
+	                //Setze Tankverbrauch um 10% nach unten
+	                fuel = fuel - 10;
+	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	                // Anzeigen des Dialogs
+	        		//Anlegen der Auswahlbuttons
+	                frame.add(sandwichFishButton);
+	                frame.add(sandwichCheeseButton);
+	        		frame.setVisible(true);
+	            }        	
+	        });	        		
+	        	sandwichFishButton.addActionListener(new ActionListener() {
+	    	    @Override
+	    	    public void actionPerformed(ActionEvent e) {
+	    	       	frame.getContentPane().removeAll();
+	    	       	frame.revalidate();
+	    	       	frame.repaint();
+	    	        //Nächster Textabschnitt des Abenteuers
+	    	        frame.add(new JLabel("<html><center>Du verspeist genüsslich das Fischsandwich.<br>"
+	    	                		+ "Noch bevor du dein Auto erreichst, verspürst du ein übles Drücken in der Magengrube.<br>"
+	    	                		+ "Du hechtest hinter die Tankstelle, um dich ein paar Mal zu übergeben. Wirklich besser<br>"
+	    	                		+ "geht es dir dadurch aber nicht. Dennoch kriechst du zurück ins Auto und erreichst 10<br>"
+	    	                		+ "Meilen später die nächste Stadt. Mühsahm schleppst du dich ins Krankenhaus,<br>"
+	    	                		+ "wo man dich auf Lebensmittelvergiftung behandelt. Dir geht es besser,<br>"
+	    	                		+ "aber für die Behandlung wurdest du um 200$ erleichtert. Während du dich noch etwas<br>"
+	    	                		+ "über das teure Fischbrötchen ärgerst, steigst du wieder in dein Auto und fährst weiter.</html>"));
+	    	                //Setze Tankverbrauch um 5% und Geld um 220$ nach unten
+	    	                money = money - 220;
+	    	                fuel = fuel - 5;
+	    	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	    	                // Anzeigen des Dialogs
+	    	        		//Anlegen der Auswahlbuttons
+	    	        	    weiter.setText("Weiter geht's");
+	    	                frame.add(weiter);
+	    	        		frame.setVisible(true);	    	        		
+	    	            }
+	    	
+	    	        });
+	        	sandwichCheeseButton.addActionListener(new ActionListener() {
+	    	    @Override
+	    	    public void actionPerformed(ActionEvent e) {
+	    	       	frame.getContentPane().removeAll();
+	    	       	frame.revalidate();
+	    	       	frame.repaint();
+	    	        //Nächster Textabschnitt des Abenteuers
+	    	        frame.add(new JLabel("<html><center>Du verspeist genüsslich das Käse-Salamisandwich.<br>"
+	    	                		+ "Dein Hunger ist gestillt. Gut gelaunt steigst du zurück in's Auto und fährst wieder los.<br></html>"));
+	    	                //Setze Geld um 10$ nach unten
+	    	                money = money - 30;
+	    	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	    	                //Anlegen der Auswahlbuttons
+	    	        		weiter.setText(" Weiter geht's ");
+	    	        	    frame.add(weiter);
+	    	        		frame.setVisible(true);	    	        		
+	    	            }
+	    	
+	    	        });
+	        weiter.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	frame.getContentPane().removeAll();
+	            	frame.revalidate();
+	            	frame.repaint();
+	            	//Nächster Textabschnitt des Abenteuers
+	                frame.add(new JLabel("<html><center>Nachdem du eine Weile unterwegs bist, wirst du ungeduldig und du beschließt<br>"
+	                		+ "auf schnellstem Wege nach Kalifornien zu fahren. Da du keine Klimaanlage besitzt<br>"
+	                		+ "und die Hitze dir auch langsam zu schaffen macht, überlegst du, ob du<br>"
+	                		+ "halbwegs spritsparend zügig weiterfahren möchtest oder lieber Vollgas gibst.<br><br>"
+	                		+ "Wie soll deine Fahrt nun weiter gehen?</html>"));
+	                //Setze Tankverbrauch um 15% nach unten
+	                fuel = fuel - 15;
+	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	                frame.add(gemuetlichButton);
+	                frame.add(vollgasButton);
+	        		frame.setVisible(true);
+	            }
+	        });
+	        gemuetlichButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	frame.getContentPane().removeAll();
+	            	frame.revalidate();
+	            	frame.repaint();
+	                //Setze Tankverbrauch um 15% nach unten
+	                fuel = fuel - 65;
+	            	//Nächster Textabschnitt des Abenteuers
+	                frame.add(new JLabel("<html><center>Es dauert eine Weile, aber bei Sonnuntergang hast du den kalifornischen<br>"
+	                		+ "Strand erreicht. Die Sonne wirst du dir heute nicht mehr auf den Bauch scheinen<br>"
+	                		+ "lassen können, aber du genießt den tollen Sonnenuntergang bei einem ausgedehnten<br>"
+	                		+ "Strandspaziergang. Die Location gefällt dir sehr und du überlegst,<br>"
+	                		+ "beim nächsten Mal vielleicht doche twas schneller zu fahren, um früher da zu sein<br>"
+	                		+ "und die Sonne am Strand noch genießen zu können...</html>"));
+	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	                frame.add(reiseBeendenButton);
+	                frame.add(reiseNeustartenButton);
+	        		frame.setVisible(true);
+	            }
+	        });
+	        vollgasButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	fuel = fuel - 72;
+	               	frame.getContentPane().removeAll();
+	            	frame.revalidate();
+	            	frame.repaint();
+	            	//Nächster Textabschnitt des Abenteuers
+	            if (fuel>=0) {
+	                frame.add(new JLabel("<html><center>Endlich kommst du in Kalifornien an!<br>"
+	                		+ "Du steigst aus dem Auto aus und hinein in deine Badehose. Dann begibst du dich zum<br>"
+	                		+ "Strand, gönnst dir ein kühlen Cocktail (natürlich Alkoholfrei, du musst ja noch fahren)<br>"
+	                		+ "und genießt unter kalifornischen Palmen das Leben.<br></html>"));
+	                frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>"));
+	            }
+	            else {
+	            	frame.add(new JLabel("<html><center>Plötzlich fängt dein Karren an zu stottern und bleibt letztendlich stehen.<br>"
+	                		+ "Die letzte Inspektion ist doch noch nicht allzu lange her. Aber ein Blick <br>"
+	            			+ "auf die Tankanzeige verrät dir, wo das Problem liegt. Deine Reise ist hier zu Ende.<br>"
+	                		+ "Du rufst dir ein Taxi und schleppst dich mühsam ins nächste Hotel. Beim Einschlafen<br>"
+	                		+ "überlegst du dir, ob du aufgibst oder morgen einen erneuten Versuch<br>"
+	                		+ "starten und die Reise von vorne antreten möchtest.<br></html>"));
+	            	frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: <font color=RED>0%</html>"));
+	            }
+	                frame.add(reiseNeustartenButton);
+	                frame.add(reiseBeendenButton);
+	        		frame.setVisible(true);
+	            }
+	        });	        
+	        reiseNeustartenButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	//Setze die Ressourcen wieder auf den Ausgangswert
+	            	fuel = 100;
+	                money = 500;
+	                
+	            	frame.getContentPane().removeAll();
+	            	frame.revalidate();
+	            	frame.repaint();
+	    			frame.add(new JLabel (intro));
+	    			frame.add(new JLabel("<html>Ressourcen:<br>Geld: " + money + "$<br>" + "Tank: " + fuel + "%</html>")); //fügt die Anzeige der Ressourcen dem JPanel hinzu
+	    			frame.add(startbutton); //fügt den Startbutton dem JPanel hinzu
+	    			frame.setVisible(true);
+	            }
+	        });
+	       reiseBeendenButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	System.exit(0);     
+	            }
+	        });	        		
+	}
+}
