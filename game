@@ -38,7 +38,7 @@ public class Game {
 		 // Erstellen des Hauptfensters (JFrame)
        JFrame frame = new JFrame();
        	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-       	frame.setSize(600, 220);
+       	frame.setSize(600, 250);
        	frame.setLayout(null);
 		//Anlegen der Buttons
 		JButton startbutton = new JButton ("Let's go!");
